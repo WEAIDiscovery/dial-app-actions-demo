@@ -1,0 +1,7 @@
+.vscode
+.idea
+.env*
+dial/data
+dial/logs
+
+.DS_Store

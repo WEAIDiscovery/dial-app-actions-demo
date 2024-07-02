@@ -1,0 +1,38 @@
+{
+  "routes": {},
+  "applications": {
+    "dial-app": {
+      "displayName": "App",
+      "description": "Simple application",
+      "endpoint": "http://dial-app:5002/openai/deployments/app/chat/completions"
+    }
+  },
+  "models": {
+    "gpt-35-turbo": {
+      "type": "chat",
+      "displayName": "GPT-3.5",
+      "endpoint": "http://adapter-openai:5000/openai/deployments/gpt-35-turbo/chat/completions",
+      "iconUrl": "http://localhost:3001/gpt3.svg",
+      "upstreams": [
+        {
+          "endpoint": "http://azure_deployment_host/openai/deployments/gpt-35-turbo/chat/completions",
+          "key": "AZURE_MODEL_API_KEY"
+        }
+      ]
+    }
+  },
+  "keys": {
+    "dial_api_key": {
+      "project": "PROJECT",
+      "role": "default"
+    }
+  },
+  "roles": {
+    "default": {
+      "limits": {
+        "gpt-35-turbo": {},
+        "dial-app": {}
+      }
+    }
+  }
+}
