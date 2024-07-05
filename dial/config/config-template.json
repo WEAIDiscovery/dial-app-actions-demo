@@ -1,0 +1,64 @@
+{
+  "routes": {},
+  "applications": {
+    "dial-app": {
+      "displayName": "App",
+      "description": "Simple application",
+      "endpoint": "http://dial-app:5002/openai/deployments/app/chat/completions"
+    }
+  },
+  "models": {
+    "gpt-35-turbo": {
+      "type": "chat",
+      "displayName": "GPT-3.5",
+      "endpoint": "http://adapter-openai:5000/openai/deployments/gpt-35-turbo/chat/completions",
+      "iconUrl": "http://localhost:3001/gpt3.svg",
+      "upstreams": [
+        {
+          "endpoint": "<AZURE_OPENAI_ENDPOINT>/openai/deployments/<AZURE_DEPLOYMENT_OPENAI_35>/chat/completions",
+          "key": "<AZURE_OPENAI_API_KEY>"
+        }
+      ]
+    },
+    "gpt-4": {
+      "type": "chat",
+      "displayName": "GPT-4",
+      "endpoint": "http://adapter-openai:5000/openai/deployments/gpt-4/chat/completions",
+      "iconUrl": "http://localhost:3001/gpt3.svg",
+      "upstreams": [
+        {
+          "endpoint": "<AZURE_OPENAI_ENDPOINT>/openai/deployments/<AZURE_DEPLOYMENT_OPENAI_4>/chat/completions",
+          "key": "<AZURE_OPENAI_API_KEY>"
+        }
+      ]
+    },
+    "embedding": {
+      "type": "embedding",
+      "displayName": "text-embedding-ada-002",
+      "endpoint": "http://adapter-openai:5000/openai/deployments/embedding/embeddings",
+      "iconUrl": "http://localhost:3001/gpt3.svg",
+      "upstreams": [
+        {
+          "endpoint": "<AZURE_OPENAI_ENDPOINT>/openai/deployments/<AZURE_DEPLOYMENT_EMBEDDING>/embeddings",
+          "key": "<AZURE_OPENAI_API_KEY>"
+        }
+      ]
+    }
+  },
+  "keys": {
+    "dial_api_key": {
+      "project": "PROJECT",
+      "role": "default"
+    }
+  },
+  "roles": {
+    "default": {
+      "limits": {
+        "gpt-35-turbo": {},
+        "gpt-4": {},
+        "embedding": {},
+        "dial-app": {}
+      }
+    }
+  }
+}
