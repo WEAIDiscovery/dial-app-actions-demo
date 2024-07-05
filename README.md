@@ -27,7 +27,22 @@ NEXTAUTH_SECRET='secret'
 
 5. Create `.env.app` file with all required for your application variables
 
-6. Run the application
+6. Create `.env.core` file with all required for your DIAL core variables
+```sh
+AZURE_OPENAI_ENDPOINT='AZURE_OPENAI_ENDPOINT'
+AZURE_OPENAI_API_KEY='AZURE_OPENAI_API_KEY'
+
+AZURE_DEPLOYMENT_OPENAI_35=gpt-35-turbo-16k
+AZURE_DEPLOYMENT_OPENAI_4=gpt-4o
+AZURE_DEPLOYMENT_EMBEDDING=text-embedding-ada-002
+AZURE_OPENAI_API_VERSION=2024-02-01
+```
+
+Important:
+These variables are used in /dial/config/config-template.json.
+If you want to use another variable(s), update accordingly /tools/update-dial-config.sh script.
+
+7. Run the application
 ```sh
 docker-compose up
 ```

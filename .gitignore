@@ -3,5 +3,6 @@
 .env*
 dial/data
 dial/logs
+dial/config/config.json
 
 .DS_Store
