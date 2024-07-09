@@ -8,14 +8,14 @@ services:
     entrypoint: [ "/bin/sh", "-c", "sh /mnt/tools/update-dial-config.sh" ]
 
   themes:
-    image: epam/ai-dial-chat-themes:0.4.0
+    image: epam/ai-dial-chat-themes:0.4.1
     ports:
       - "3001:8080"
 
   chat:
     ports:
       - "3000:3000"
-    image: epam/ai-dial-chat:0.10.0
+    image: epam/ai-dial-chat:0.13.1
     depends_on:
       - themes
       - core
@@ -24,7 +24,7 @@ services:
       THEMES_CONFIG_HOST: "http://themes:8080"
       DIAL_API_HOST: "http://core:8080"
       ENABLED_FEATURES: "conversations-section,prompts-section,top-settings,top-clear-conversation,top-chat-info,top-chat-model-settings,empty-chat-settings,header,foiter,report-an-issue,likes,input-files,attachments-manager"
-  
+
   redis:
     image: redis:7.2.4-alpine3.19
     restart: always
@@ -43,7 +43,7 @@ services:
     user: ${UID:-root}
     ports:
       - "8080:8080"
-    image: epam/ai-dial-core:0.9.0
+    image: epam/ai-dial-core:0.12.0
     env_file: .env.core
     environment:
       'AIDIAL_SETTINGS': '/opt/settings/settings.json'
@@ -64,7 +64,7 @@ services:
       - ${DIAL_DIR:-.}/dial/data/:/app/data
 
   adapter-openai:
-    image: epam/ai-dial-adapter-openai:0.11.0
+    image: epam/ai-dial-adapter-openai:0.12.0
     environment:
       WEB_CONCURRENCY: "3"
 
