@@ -1,6 +1,8 @@
 services:
   pre-config:
     image: busybox
+    networks:
+      - app-network
     volumes:
       - ./dial/config:/mnt/config
       - ./tools:/mnt/tools
@@ -9,13 +11,17 @@ services:
 
   themes:
     image: epam/ai-dial-chat-themes:0.4.1
+    networks:
+      - app-network
     ports:
       - "3001:8080"
 
   chat:
+    image: epam/ai-dial-chat:0.13.1
+    networks:
+      - app-network
     ports:
       - "3000:3000"
-    image: epam/ai-dial-chat:0.13.1
     depends_on:
       - themes
       - core
@@ -27,6 +33,8 @@ services:
 
   redis:
     image: redis:7.2.4-alpine3.19
+    networks:
+      - app-network
     restart: always
     ports:
       - "6379:6379"
@@ -40,36 +48,40 @@ services:
     mem_limit: 2200M
 
   core:
-    user: ${UID:-root}
+    image: epam/ai-dial-core:0.12.0
+    networks:
+      - app-network
     ports:
       - "8080:8080"
-    image: epam/ai-dial-core:0.12.0
     env_file: .env.core
     environment:
-      'AIDIAL_SETTINGS': '/opt/settings/settings.json'
-      'JAVA_OPTS': '-Dgflog.config=/opt/settings/gflog.xml'
-      'LOG_DIR': '/app/log'
-      'STORAGE_DIR': '/app/data'
-      'aidial.config.files': '["/opt/config/config.json"]'
-      'aidial.storage.overrides': '{ "jclouds.filesystem.basedir": "data" }'
-      'aidial.redis.singleServerConfig.address': 'redis://redis:6379'
-      'DIAL_DIR': '.'
+      AIDIAL_SETTINGS: '/opt/settings/settings.json'
+      JAVA_OPTS: '-Dgflog.config=/opt/settings/gflog.xml'
+      aidial.config.files: '["/opt/config/config.json"]'
+      aidial.storage.overrides: '{ "jclouds.filesystem.basedir": "data" }'
+      aidial.redis.singleServerConfig.address: 'redis://redis:6379'
     depends_on:
       - redis
       - pre-config
     volumes:
       - ${DIAL_DIR:-.}/dial/settings:/opt/settings
       - ${DIAL_DIR:-.}/dial/config:/opt/config
-      - ${DIAL_DIR:-.}/dial/logs/:/app/log
-      - ${DIAL_DIR:-.}/dial/data/:/app/data
 
   adapter-openai:
     image: epam/ai-dial-adapter-openai:0.12.0
+    networks:
+      - app-network
     environment:
       WEB_CONCURRENCY: "3"
 
   dial-app:
     build: app
+    networks:
+      - app-network
     env_file: .env.app
     ports:
       - "5002:5002"
+
+networks:
+  app-network:
+    driver: bridge
