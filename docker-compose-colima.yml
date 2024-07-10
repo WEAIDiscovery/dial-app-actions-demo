@@ -70,7 +70,7 @@ services:
       test: ["CMD-SHELL", "wget --spider -S http://0.0.0.0:8080/health 2>&1 | grep '200 OK' || exit 1"]
       interval: 10s
       timeout: 10s
-      retries: 10
+      retries: 20
 
   adapter-openai:
     image: epam/ai-dial-adapter-openai:0.12.0
@@ -82,7 +82,7 @@ services:
       test: [ "CMD-SHELL", "wget --spider -S http://0.0.0.0:5000/health 2>&1 | grep '200 OK' || exit 1" ]
       interval: 10s
       timeout: 10s
-      retries: 10
+      retries: 20
 
   dial-app:
     build: app
