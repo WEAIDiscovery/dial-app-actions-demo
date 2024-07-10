@@ -62,14 +62,35 @@ services:
       - ${DIAL_DIR:-.}/dial/config:/opt/config
       - ${DIAL_DIR:-.}/dial/logs/:/app/log
       - ${DIAL_DIR:-.}/dial/data/:/app/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -S http://0.0.0.0:8080/health 2>&1 | grep '200 OK' || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
 
   adapter-openai:
     image: epam/ai-dial-adapter-openai:0.12.0
     environment:
       WEB_CONCURRENCY: "3"
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --spider -S http://0.0.0.0:5000/health 2>&1 | grep '200 OK' || exit 1" ]
+      interval: 10s
+      timeout: 10s
+      retries: 10
 
   dial-app:
     build: app
     env_file: .env.app
     ports:
       - "5002:5002"
+    depends_on:
+      core:
+        condition: service_healthy
+      adapter-openai:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+networks:
+  app-network:
+    driver: bridge
