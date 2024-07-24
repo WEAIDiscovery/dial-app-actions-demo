@@ -1,15 +1,14 @@
 [tool.poetry]
-name = "dial-app"
+name = "dial-app-actions-demo"
 version = "0.1.0"
 description = ""
-authors = ["uladkaminski <kaminski.uladzislau@gmail.com>"]
+authors = ["Sergey Shakhmatov <sergesha@mail.ru>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "3.12.3"
-aidial-sdk = "^0.8.0"
+aidial-sdk = { git = "https://github.com/WEAIDiscovery/ai-dial-sdk.git", branch = "feat/actions" }
 uvicorn = "^0.30.1"
-
 
 [build-system]
 requires = ["poetry-core"]

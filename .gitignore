@@ -1,6 +1,7 @@
 .vscode
 .idea
 .env*
+.venv
 dial/data
 dial/logs
 dial/config/config.json

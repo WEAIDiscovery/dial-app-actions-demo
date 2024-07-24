@@ -1,5 +1,5 @@
 
-# DIAL Application
+# DIAL Actions Demo Application
 
 To run the DIAL application locally, please follow the instructions below.
 
@@ -25,14 +25,14 @@ To run the DIAL application locally, please follow the instructions below.
 
 3. **Create `.env.chat` file** 
     ```sh
-    DIAL_API_KEY='YOUR_API_KEY' # Same as in the dial/config/config-template.json
-    NEXTAUTH_SECRET='secret'
-    DEFAULT_MODEL=gpt-35-turbo
+   DIAL_API_KEY='dial_api_key' # should be the same as in the config.json
+   NEXTAUTH_SECRET='secret'
+   DEFAULT_MODEL=gpt-35-turbo
     ```
 
 4. **Create `.env.app` file** with the actual values according to [this documentation](https://github.com/epam/ai-dial-core/blob/development/README.md)
 
-5. **Create `.env.core` file**
+5. **Create `.env.core` file** if you want to use models
     ```sh
     AZURE_OPENAI_ENDPOINT='AZURE_OPENAI_ENDPOINT'
     AZURE_OPENAI_API_KEY='AZURE_OPENAI_API_KEY'

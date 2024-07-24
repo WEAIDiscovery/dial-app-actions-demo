@@ -17,7 +17,8 @@ services:
       - "3001:8080"
 
   chat:
-    image: epam/ai-dial-chat:0.13.1
+    # image: epam/ai-dial-chat:0.13.1
+    build: https://github.com/WEAIDiscovery/ai-dial-chat.git#feat/actions
     networks:
       - app-network
     ports:

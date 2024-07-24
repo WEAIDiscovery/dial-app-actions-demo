@@ -15,7 +15,8 @@ services:
   chat:
     ports:
       - "3000:3000"
-    image: epam/ai-dial-chat:0.13.1
+    # image: epam/ai-dial-chat:0.13.1
+    build: https://github.com/WEAIDiscovery/ai-dial-chat.git#feat/actions
     depends_on:
       - themes
       - core
